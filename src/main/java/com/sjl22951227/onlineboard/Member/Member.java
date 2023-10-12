@@ -1,11 +1,19 @@
 package com.sjl22951227.onlineboard.Member;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Entity
 public class Member {
 
-    private String id_member;
+    @Id
+    @GeneratedValue
+    private long id;
+    private String memberId;
     private String password;
     private String name_first;
     private String name_last;
@@ -20,8 +28,8 @@ public class Member {
     private String role;
     private String profilePicturePath;
 
-    public Member(String id_member, String password, String name_first, String name_last, String nickname, String email, LocalDate birthday) {
-        this.id_member = id_member;
+    public Member(String memberId, String password, String name_first, String name_last, String nickname, String email, LocalDate birthday) {
+        this.memberId = memberId;
         this.password = password;
         this.name_first = name_first;
         this.name_last = name_last;
@@ -30,12 +38,24 @@ public class Member {
         this.birthday = birthday;
     }
 
-    public String getId_member() {
-        return id_member;
+    public Member() {
+
     }
 
-    public void setId_member(String id_member) {
-        this.id_member = id_member;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
     public String getPassword() {
