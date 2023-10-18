@@ -13,7 +13,7 @@ public class Member {
     @Id
     @GeneratedValue
     private long id;
-    private String memberId;
+    private String username;
     private String password;
     private String name_first;
     private String name_last;
@@ -28,8 +28,8 @@ public class Member {
     private String role;
     private String profilePicturePath;
 
-    public Member(String memberId, String password, String name_first, String name_last, String nickname, String email, LocalDate birthday) {
-        this.memberId = memberId;
+    public Member(String username, String password, String name_first, String name_last, String nickname, String email, LocalDate birthday) {
+        this.username = username;
         this.password = password;
         this.name_first = name_first;
         this.name_last = name_last;
@@ -50,12 +50,12 @@ public class Member {
         this.id = id;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

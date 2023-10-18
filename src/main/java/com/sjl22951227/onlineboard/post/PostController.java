@@ -1,7 +1,9 @@
 package com.sjl22951227.onlineboard.post;
 
 import com.sjl22951227.onlineboard.post.services.PostCrudService;
+import com.sjl22951227.onlineboard.post.services.PostSearchServiceImpl;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,15 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @RestController
 public class PostController {
 
     private final PostCrudService postCrudService;
+    private final PostSearchServiceImpl postSearchService;
 
-    public PostController(PostCrudService postCrudService) {
+    public PostController(PostCrudService postCrudService, PostSearchServiceImpl postSearchService) {
         this.postCrudService = postCrudService;
+        this.postSearchService = postSearchService;
     }
 
     @GetMapping("/page={pageNumber}")
@@ -30,6 +32,7 @@ public class PostController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/post/{id}")
     public ResponseEntity<Post> readPost(@PathVariable long id) {
         try {
@@ -72,5 +75,21 @@ public class PostController {
     @DeleteMapping("/post/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable long id) {
         return postCrudService.deletePost(id);
+    }
+
+
+    //search
+
+    @GetMapping("/search/title")
+    public ResponseEntity<Page<Post>> searchWithTitle(@RequestParam("keyword") String keyword,
+                                                           @RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber
+    ) {
+        try {
+            Pageable pageable = PageRequest.of(pageNumber-1, 20);
+            Page<Post> searchedPosts = postSearchService.searchByTitle(keyword, pageable);
+            return new ResponseEntity<>(searchedPosts, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -14,9 +14,9 @@ public class MemberController {
         this.memberRepository = memberRepository;
     }
 
-    @GetMapping("/members/{memberId}")
-    public Member retrieveMember(@PathVariable String memberId){
-        return memberRepository.findByMemberId(memberId);
+    @GetMapping("/members/{username}")
+    public Member retrieveMember(@PathVariable String username){
+        return memberRepository.findByUsername(username);
     }
 
     @GetMapping("/members/all")

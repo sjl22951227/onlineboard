@@ -27,14 +27,14 @@ public class PostCrudServiceImpl implements PostCrudService {
         this.postRepository = postRepository;
     }
 
-//    @PostConstruct
-//    public void init() {
+    @PostConstruct
+    public void init() {
 //        List<Post> initialPosts = new ArrayList<>();
 //        for (int i = 1; i <= 104; i++) {
 //            initialPosts.add(new Post("Title " + i, "sjl22", "This is post " + i));
 //        }
 //        postRepository.saveAll(initialPosts);
-//    }
+    }
 
     @Override
     public Post findPostById(Long id) {
@@ -99,8 +99,4 @@ public class PostCrudServiceImpl implements PostCrudService {
         }
     }
 
-    @Override
-    public void init() {
-
-    }
 }

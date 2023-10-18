@@ -3,11 +3,11 @@ package com.sjl22951227.onlineboard.post;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-
-@Table(indexes = {
-        @Index(name = "index_views", columnList = "views", unique = false),
-        @Index(name = "index_created_time", columnList = "created_Time", unique = false)
-})
+//
+//@Table(indexes = {
+//        @Index(name = "index_views", columnList = "views", unique = false),
+//        @Index(name = "index_created_time", columnList = "created_Time", unique = false)
+//})
 
 @Entity
 public class Post {
