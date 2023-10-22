@@ -19,7 +19,7 @@ public class Post {
     private String title;
     @Column(length = 20, nullable = false)
     private String author;
-    @Column(columnDefinition = "Text", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String text;
     @Column(nullable = false)
     private long views;
@@ -27,6 +27,8 @@ public class Post {
     private LocalDateTime created_Time;
     @Column(nullable = false)
     private LocalDateTime modified_Time;
+    @Column(nullable = false)
+    private int commentsCounter;
 
     public Post() {
     }
@@ -38,6 +40,7 @@ public class Post {
         this.views = 0;
         this.created_Time = LocalDateTime.now();
         this.modified_Time = LocalDateTime.now();
+        this.commentsCounter = 0;
     }
 
     public long getId() {
@@ -94,5 +97,13 @@ public class Post {
 
     public void setModified_Time(LocalDateTime modified_Time) {
         this.modified_Time = modified_Time;
+    }
+
+    public int getCommentsCounter() {
+        return commentsCounter;
+    }
+
+    public void setCommentsCounter(int commentsCounter) {
+        this.commentsCounter = commentsCounter;
     }
 }

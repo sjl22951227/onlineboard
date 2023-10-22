@@ -2,7 +2,6 @@ package com.sjl22951227.onlineboard.comment;
 
 import com.sjl22951227.onlineboard.post.Post;
 import jakarta.persistence.*;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
 
@@ -11,8 +10,9 @@ public class Comment {
     @Id
     @GeneratedValue
     private Long id;
-
-    private String memberId;
+    @Column(nullable = false)
+    private String user;
+    @Column(nullable = false)
     private String text;
 
     @ManyToOne
@@ -24,18 +24,26 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(String memberId, String text) {
-        this.memberId = memberId;
+    public Comment(String user, String text) {
+        this.user = user;
         this.text = text;
         this.created_Time = LocalDateTime.now();
     }
 
-    public String getMemberId() {
-        return memberId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getText() {

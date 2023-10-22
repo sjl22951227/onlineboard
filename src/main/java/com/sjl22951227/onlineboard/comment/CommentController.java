@@ -1,6 +1,7 @@
 package com.sjl22951227.onlineboard.comment;
 
 import com.sjl22951227.onlineboard.comment.repository.CommentRepository;
+import com.sjl22951227.onlineboard.comment.services.CommentCrudService;
 import com.sjl22951227.onlineboard.post.Post;
 import com.sjl22951227.onlineboard.post.repository.PostRepository;
 import org.springframework.http.HttpStatus;
@@ -13,38 +14,36 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
-    private final CommentRepository commentRepository;
 
-    private final PostRepository postRepository;
+    private final CommentCrudService commentCrudService;
 
-    public CommentController(CommentRepository commentRepository, PostRepository postRepository) {
-        this.commentRepository = commentRepository;
-        this.postRepository = postRepository;
+    public CommentController(CommentCrudService commentCrudService) {
+        this.commentCrudService = commentCrudService;
     }
 
     @GetMapping("/{postId}")
     public ResponseEntity<List<Comment>> getComments(@PathVariable Long postId) {
-        List<Comment> commentList = commentRepository.findByPostId(postId);
-        if (commentList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
+        List<Comment> commentList = commentCrudService.getComment(postId);
+        if (commentList != null) {
             return new ResponseEntity<>(commentList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
     @PostMapping("/{postId}")
     public ResponseEntity<Comment> addComment(@PathVariable Long postId, @RequestBody Comment comment) {
-        Optional<Post> optionalPost = postRepository.findById(postId);
-        if (optionalPost.isPresent()) {
-            Post post = optionalPost.get();
+        Comment newComment = commentCrudService.addComment(postId, comment);
+        if (newComment != null) {
 
-            comment.setPost(post);
-
-            Comment savedComment = commentRepository.save(comment);
-
-            return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
+            return new ResponseEntity<>(newComment, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
+        return commentCrudService.deleteComment(id);
     }
 }

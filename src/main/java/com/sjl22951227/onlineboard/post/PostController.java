@@ -2,9 +2,6 @@ package com.sjl22951227.onlineboard.post;
 
 import com.sjl22951227.onlineboard.post.services.PostCrudService;
 import com.sjl22951227.onlineboard.post.services.PostSearchServiceImpl;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +40,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("/post/posting")
+    @PostMapping("/posting")
     public ResponseEntity<Post> writePost(@RequestBody Post post) {
         try {
             Post newPost = postCrudService.writePost(post);
@@ -74,22 +71,33 @@ public class PostController {
 
     @DeleteMapping("/post/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable long id) {
-        return postCrudService.deletePost(id);
+        System.out.println("delete!!");
+        if(postCrudService.deletePost(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 
     //search
 
-    @GetMapping("/search/title")
-    public ResponseEntity<Page<Post>> searchWithTitle(@RequestParam("keyword") String keyword,
-                                                           @RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber
-    ) {
+    @GetMapping("/search/{type}/{keyword}/{pageNumber}")
+    public ResponseEntity<Map<String, Object>> searchWithTitle(@PathVariable String keyword, @PathVariable String pageNumber, @PathVariable String type) {
+
+        System.out.println("t : "+type);
+        int pageNum = Integer.parseInt(pageNumber);
+
         try {
-            Pageable pageable = PageRequest.of(pageNumber-1, 20);
-            Page<Post> searchedPosts = postSearchService.searchByTitle(keyword, pageable);
-            return new ResponseEntity<>(searchedPosts, HttpStatus.OK);
+            Map<String, Object> response = postSearchService.searchByKeyword(keyword, pageNum,type);
+            if(response==null){
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

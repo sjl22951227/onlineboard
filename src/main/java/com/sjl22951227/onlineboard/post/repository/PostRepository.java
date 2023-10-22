@@ -14,6 +14,6 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findByTitleContaining(String keyword, Pageable pageable);
-    List<Post> findByAuthorContaining(String author);
-    List<Post> findByTextContaining(String text);
+    Page<Post> findByTextContaining(String keyword, Pageable pageable);
+    Page<Post> findByAuthorContaining(String author, Pageable pageable);
 }

@@ -14,6 +14,6 @@ public interface PostCrudService {
     Post readPost(long id);
     Post writePost(Post post);
     Post updatePost(Post existingPost, Post post);
-    ResponseEntity<Void> deletePost(long id);
+    Boolean deletePost(long id);
     void init();
 }

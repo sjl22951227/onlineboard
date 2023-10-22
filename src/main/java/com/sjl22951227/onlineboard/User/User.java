@@ -1,5 +1,6 @@
-package com.sjl22951227.onlineboard.Member;
+package com.sjl22951227.onlineboard.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,37 +9,44 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-public class Member {
+public class User {
 
     @Id
     @GeneratedValue
     private long id;
+    @Column(length = 20, nullable = false)
     private String username;
+    @Column(length = 20, nullable = false)
     private String password;
+    @Column(length = 20, nullable = false)
     private String name_first;
+    @Column(length = 20, nullable = false)
     private String name_last;
+    @Column(length = 20, nullable = false)
     private String nickname;
+    @Column(nullable = false)
     private String email;
-    private LocalDate birthday;
-    private LocalDateTime registrationDate;
-    private LocalDateTime lastLoginDate;
-    private Integer credit;
-    private Integer level;
-    private String status;
-    private String role;
-    private String profilePicturePath;
 
-    public Member(String username, String password, String name_first, String name_last, String nickname, String email, LocalDate birthday) {
+    @Column
+    private LocalDateTime registrationDate;
+    @Column
+    private LocalDateTime lastLoginDate;
+//    private Integer credit;
+//    private Integer level;
+//    private String status;
+//    private String profilePicturePath;
+
+    public User(String username, String password, String name_first, String name_last, String nickname, String email) {
         this.username = username;
         this.password = password;
         this.name_first = name_first;
         this.name_last = name_last;
         this.nickname = nickname;
         this.email = email;
-        this.birthday = birthday;
+        this.lastLoginDate=LocalDateTime.now();
     }
 
-    public Member() {
+    public User() {
 
     }
 
@@ -98,14 +106,6 @@ public class Member {
         this.email = email;
     }
 
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
     public LocalDateTime getRegistrationDate() {
         return registrationDate;
     }
@@ -122,43 +122,35 @@ public class Member {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public Integer getCredit() {
-        return credit;
-    }
-
-    public void setCredit(Integer credit) {
-        this.credit = credit;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getProfilePicturePath() {
-        return profilePicturePath;
-    }
-
-    public void setProfilePicturePath(String profilePicturePath) {
-        this.profilePicturePath = profilePicturePath;
-    }
+//    public Integer getCredit() {
+//        return credit;
+//    }
+//
+//    public void setCredit(Integer credit) {
+//        this.credit = credit;
+//    }
+//
+//    public Integer getLevel() {
+//        return level;
+//    }
+//
+//    public void setLevel(Integer level) {
+//        this.level = level;
+//    }
+//
+//    public String getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(String status) {
+//        this.status = status;
+//    }
+//
+//    public String getProfilePicturePath() {
+//        return profilePicturePath;
+//    }
+//
+//    public void setProfilePicturePath(String profilePicturePath) {
+//        this.profilePicturePath = profilePicturePath;
+//    }
 }

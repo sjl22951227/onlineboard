@@ -1,5 +1,7 @@
 package com.sjl22951227.onlineboard.post.services;
 
+import com.sjl22951227.onlineboard.comment.Comment;
+import com.sjl22951227.onlineboard.comment.repository.CommentRepository;
 import com.sjl22951227.onlineboard.exceptions.ResourceNotFoundException;
 import com.sjl22951227.onlineboard.post.Post;
 import com.sjl22951227.onlineboard.post.repository.PostRepository;
@@ -7,10 +9,8 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,18 +22,25 @@ import java.util.Map;
 public class PostCrudServiceImpl implements PostCrudService {
 
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
-    public PostCrudServiceImpl(PostRepository postRepository) {
+    public PostCrudServiceImpl(PostRepository postRepository, CommentRepository commentRepository) {
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
     }
 
     @PostConstruct
     public void init() {
-//        List<Post> initialPosts = new ArrayList<>();
-//        for (int i = 1; i <= 104; i++) {
-//            initialPosts.add(new Post("Title " + i, "sjl22", "This is post " + i));
-//        }
-//        postRepository.saveAll(initialPosts);
+        //dummy 데이터 생성
+        if(postRepository.findAll().size()<300){
+            List<Post> initialPosts = new ArrayList<>();
+            for (int i = 1; i <= 100; i++) {
+                initialPosts.add(new Post("master의 게시물입니다! " + i, "master", "This is post from master(dummy posts) " + i));
+                initialPosts.add(new Post("저는 게스트입니다!!! " + i, "guest", "This is post from guest(dummy posts) " + i));
+                initialPosts.add(new Post("이승준의 게시물입니다! " + i, "sjl22", "This is post from sjl22(dummy posts) " + i));
+            }
+            postRepository.saveAll(initialPosts);
+        }
     }
 
     @Override
@@ -50,7 +57,7 @@ public class PostCrudServiceImpl implements PostCrudService {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            Pageable pageable = PageRequest.of(pageNumber - 1, 20);
+            Pageable pageable = PageRequest.of(pageNumber - 1, 20, Sort.by("id").descending());
             Page<Post> pagePosts = postRepository.findAll(pageable);
 
             response.put("content", pagePosts.getContent());
@@ -90,12 +97,14 @@ public class PostCrudServiceImpl implements PostCrudService {
     }
 
     @Override
-    public ResponseEntity<Void> deletePost(long id) {
+    public Boolean deletePost(long id) {
         if (postRepository.existsById(id)) {
+            List<Comment> commentList=(commentRepository.findAllByPostId(id));
+            commentRepository.deleteAll(commentList);
             postRepository.deleteById(id);
-            return ResponseEntity.noContent().build(); // 204 No Content
+            return true;
         } else {
-            return ResponseEntity.notFound().build(); // 404 Not Found
+            return false;
         }
     }
 
