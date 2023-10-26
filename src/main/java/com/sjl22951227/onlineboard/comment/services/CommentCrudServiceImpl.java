@@ -39,8 +39,6 @@ public class CommentCrudServiceImpl implements CommentCrudService {
 
             Post post=comment.getPost();
 
-            post.setCommentsCounter(post.getCommentsCounter()-1);
-
             commentRepository.delete(comment);
 
             return ResponseEntity.noContent().build(); // 204 No Content
@@ -60,7 +58,8 @@ public class CommentCrudServiceImpl implements CommentCrudService {
 
             System.out.println("comment: " + comment.getUser());
 
-            post.setCommentsCounter(post.getCommentsCounter() + 1);
+            post.getComments().add(comment)
+            ;
             return commentRepository.save(comment);
         }
         else{

@@ -13,10 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PostCrudServiceImpl implements PostCrudService {
@@ -32,15 +29,15 @@ public class PostCrudServiceImpl implements PostCrudService {
     @PostConstruct
     public void init() {
         //dummy 데이터 생성
-        if(postRepository.findAll().size()<300){
-            List<Post> initialPosts = new ArrayList<>();
-            for (int i = 1; i <= 100; i++) {
-                initialPosts.add(new Post("master의 게시물입니다! " + i, "master", "This is post from master(dummy posts) " + i));
-                initialPosts.add(new Post("저는 게스트입니다!!! " + i, "guest", "This is post from guest(dummy posts) " + i));
-                initialPosts.add(new Post("이승준의 게시물입니다! " + i, "sjl22", "This is post from sjl22(dummy posts) " + i));
-            }
-            postRepository.saveAll(initialPosts);
-        }
+//        if(postRepository.findAll().size()<300){
+//            List<Post> initialPosts = new ArrayList<>();
+//            for (int i = 1; i <= 100; i++) {
+//                initialPosts.add(new Post("master의 게시물입니다! " + i, "master", "This is post from master(dummy posts) " + i));
+//                initialPosts.add(new Post("저는 게스트입니다!!! " + i, "guest", "This is post from guest(dummy posts) " + i));
+//                initialPosts.add(new Post("이승준의 게시물입니다! " + i, "sjl22", "This is post from sjl22(dummy posts) " + i));
+//            }
+//            postRepository.saveAll(initialPosts);
+//        }
     }
 
     @Override
@@ -98,9 +95,9 @@ public class PostCrudServiceImpl implements PostCrudService {
 
     @Override
     public Boolean deletePost(long id) {
-        if (postRepository.existsById(id)) {
-            List<Comment> commentList=(commentRepository.findAllByPostId(id));
-            commentRepository.deleteAll(commentList);
+        Optional<Post> post=postRepository.findById(id);
+        if (post.isPresent()) {
+            commentRepository.deleteAll(post.get().getComments());
             postRepository.deleteById(id);
             return true;
         } else {

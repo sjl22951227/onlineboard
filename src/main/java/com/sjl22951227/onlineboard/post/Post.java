@@ -1,8 +1,12 @@
 package com.sjl22951227.onlineboard.post;
 
+import com.sjl22951227.onlineboard.User.User;
+import com.sjl22951227.onlineboard.comment.Comment;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 //
 //@Table(indexes = {
 //        @Index(name = "index_views", columnList = "views", unique = false),
@@ -17,30 +21,32 @@ public class Post {
     private long id;
     @Column(length = 100, nullable = false)
     private String title;
-    @Column(length = 20, nullable = false)
-    private String author;
+//    @Column(length = 20, nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User author;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String text;
     @Column(nullable = false)
     private long views;
     @Column(nullable = false)
     private LocalDateTime created_Time;
-    @Column(nullable = false)
+    @Column
     private LocalDateTime modified_Time;
-    @Column(nullable = false)
-    private int commentsCounter;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments=new ArrayList<>();
 
     public Post() {
     }
 
-    public Post(String title, String author, String text) {
+    public Post(String title, User author, String text) {
         this.title = title;
         this.author = author;
         this.text = text;
         this.views = 0;
         this.created_Time = LocalDateTime.now();
         this.modified_Time = LocalDateTime.now();
-        this.commentsCounter = 0;
     }
 
     public long getId() {
@@ -59,11 +65,11 @@ public class Post {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 
@@ -99,11 +105,12 @@ public class Post {
         this.modified_Time = modified_Time;
     }
 
-    public int getCommentsCounter() {
-        return commentsCounter;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setCommentsCounter(int commentsCounter) {
-        this.commentsCounter = commentsCounter;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
+
 }

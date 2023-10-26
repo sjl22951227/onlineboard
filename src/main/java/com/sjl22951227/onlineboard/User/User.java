@@ -22,9 +22,9 @@ public class User {
     private String name_first;
     @Column(length = 20, nullable = false)
     private String name_last;
-    @Column(length = 20, nullable = false)
-    private String nickname;
-    @Column(nullable = false)
+//    @Column(length = 20, nullable = false)
+//    private String nickname;
+    @Column(length = 40,nullable = false)
     private String email;
 
     @Column
@@ -41,7 +41,7 @@ public class User {
         this.password = password;
         this.name_first = name_first;
         this.name_last = name_last;
-        this.nickname = nickname;
+//        this.nickname = nickname;
         this.email = email;
         this.lastLoginDate=LocalDateTime.now();
     }
@@ -90,13 +90,13 @@ public class User {
         this.name_last = name_last;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
+//    public String getNickname() {
+//        return nickname;
+//    }
+//
+//    public void setNickname(String nickname) {
+//        this.nickname = nickname;
+//    }
 
     public String getEmail() {
         return email;
