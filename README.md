@@ -51,6 +51,11 @@
   - 개발 환경 : MacOs 14.0 Spring 6.0.12, SpringBoot 3.1.4, Java 17.0, mysql 8.0.34
   - 형상 관리 툴 : git
   - 요약 : OnlineBoard라는 이름의 게시판 제작 프로젝트
+ 
+- ERD(Entity Relationship Diagram)
+
+  - ![스크린샷 2023-10-26 오후 11 21 31](https://github.com/sjl22951227/onlineboard/assets/144699632/1b1e83b2-cbb7-4a5a-b792-d34e01dc4d25)
+
 
     
   
