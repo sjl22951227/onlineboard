@@ -8,7 +8,7 @@
 
 [프론트엔드 Repository 링크](https://github.com/sjl22951227/boardfrontend)
 
-[유튜브 동영상 링크]https://youtu.be/2TkpZJmKfEU
+[유튜브 동영상 링크](https://youtu.be/2TkpZJmKfEU)
 
 # 프로젝트 특징
 
