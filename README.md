@@ -41,7 +41,7 @@
   - 사용자가 클릭한 페이지에 해당하는 게시물 목록을 서버에 요청함.
   - DB의 목록을 실시간으로 반영함
  
-- 개요
+# 개요
 
   - 프로젝트 명칭 : OnlineBoard
   - 개발 인원 : 1명(이승준)
@@ -51,7 +51,7 @@
   - 형상 관리 툴 : git
   - 요약 : OnlineBoard라는 이름의 게시판 제작 프로젝트
 
-- 요구사항
+# 요구사항
   
   - 게시판 메인화면은 20개의 게시글을 최신순으로 제공
   - 게시글의 정보를 제목, 작성자, 조회수, 작성일자 순으로 제공
@@ -63,13 +63,49 @@
   - 로그인시 글 작성 및 자신이 작성한 글 수정, 삭제 가능하게 할 것
   - 로그인 후 댓글 작성시 해당 username이 작성자로, 비로그인 시 guest로 처리할 것
 
- 
-- ERD(Entity Relationship Diagram)
+
+
+# API 명세서
+
+회원 관련 API
+
+| 기능     | Method | URL          | return          |
+|----------|--------|--------------|-----------------|
+| 회원가입  | Post   | /auth/signup | Created or Conflict |
+| 로그인    | Post   | /authenticate| OK(jwt token)    |
+
+
+게시글 관련 API
+
+| 기능                  | Method | URL                                | return                      |
+|-----------------------|--------|------------------------------------|-----------------------------|
+| 페이지 내 게시글 리스트 | Get    | /page={pageNumber}                 | OK or INTERNAL_SERVER_ERROR  |
+| 게시글 읽기            | Get    | /post/{id}                         | OK or INTERNAL_SERVER_ERROR  |
+| 게시글 쓰기            | Post   | /posting                           | Created or INTERNAL_SERVER_ERROR |
+| 게시글 수정하기        | Put    | /post/{id}                         | OK or INTERNAL_SERVER_ERROR  |
+| 게시글 삭제하기        | Delete | /post/{id}                         | OK or NOT_FOUND              |
+| 게시글 검색하기        | Get    | /search/{type}/{keyword}/{pageNumber}| OK or INTERNAL_SERVER_ERROR |
+
+댓글 관련 API
+
+| 기능                  | Method | URL                                | return                      |
+|-----------------------|--------|------------------------------------|-----------------------------|
+| 댓글 읽기                | Get    | /comments/{postId}                 | OK or NO_CONTENT  |
+| 댓글 작성하기            | Post    | /comments/{postId}           | OK or NOT_FOUND  |
+| 댓글 삭제하기            | Delete   | /comments/{id}                    | No_Content or Not_Found |
+
+
+
+
+
+# ERD(Entity Relationship Diagram)
 
   - ![스크린샷 2023-10-26 오후 11 21 31](https://github.com/sjl22951227/onlineboard/assets/144699632/1b1e83b2-cbb7-4a5a-b792-d34e01dc4d25)
 
 
-    
+
+
+# 화면 사진
   
   메인화면
     
