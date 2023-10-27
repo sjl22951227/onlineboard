@@ -4,7 +4,6 @@
 
 아래 링크를 클릭하시면 실제 게시판을 사용해보실 수 있습니다.
 
-//[OnlineBoard 게시판 링크](http://onlineboard-frontend-v1.s3-website.ap-northeast-2.amazonaws.com/page/1)
 
 [프론트엔드 Repository 링크](https://github.com/sjl22951227/boardfrontend)
 
