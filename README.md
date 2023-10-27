@@ -4,6 +4,7 @@
 
 아래 링크를 클릭하시면 실제 게시판을 사용해보실 수 있습니다.
 
+[게시판 프로젝트 링크](http://onlineboard-sjl22.s3-website.ap-northeast-2.amazonaws.com/)
 
 [프론트엔드 Repository 링크](https://github.com/sjl22951227/boardfrontend)
 
